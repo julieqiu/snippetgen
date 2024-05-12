@@ -131,7 +131,7 @@ func defaultSecretManagerCallOptions() *SecretManagerCallOptions {
 	}
 }
 
-// internalSecretManagerClient is an interface that defines the methods available from .
+// internalSecretManagerClient is an interface that defines the methods available from Secret Manager API.
 type internalSecretManagerClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -153,7 +153,7 @@ type internalSecretManagerClient interface {
 	TestIamPermissions(context.Context, *iampb.TestIamPermissionsRequest, ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error)
 }
 
-// SecretManagerClient is a client for interacting with .
+// SecretManagerClient is a client for interacting with Secret Manager API.
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
 //
 // Secret Manager Service
@@ -300,7 +300,7 @@ func (c *SecretManagerClient) TestIamPermissions(ctx context.Context, req *iampb
 	return c.internalClient.TestIamPermissions(ctx, req, opts...)
 }
 
-// secretManagerGRPCClient is a client for interacting with  over gRPC transport.
+// secretManagerGRPCClient is a client for interacting with Secret Manager API over gRPC transport.
 //
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
 type secretManagerGRPCClient struct {

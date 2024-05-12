@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"math"
 	"net/url"
+	"time"
 
 	iampb "cloud.google.com/go/iam/apiv1/iampb"
 	secretmanagerpb "cloud.google.com/go/secretmanager/apiv1/secretmanagerpb"
@@ -31,6 +32,7 @@ import (
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -72,34 +74,59 @@ func defaultSecretManagerGRPCClientOptions() []option.ClientOption {
 func defaultSecretManagerCallOptions() *SecretManagerCallOptions {
 	return &SecretManagerCallOptions{
 		ListSecrets: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		CreateSecret: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		AddSecretVersion: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		GetSecret: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		UpdateSecret: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		DeleteSecret: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		ListSecretVersions: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		GetSecretVersion: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		AccessSecretVersion: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
+			gax.WithRetry(func() gax.Retryer {
+				return gax.OnCodes([]codes.Code{
+					codes.Unavailable,
+					codes.ResourceExhausted,
+				}, gax.Backoff{
+					Initial:    2000 * time.Millisecond,
+					Max:        60000 * time.Millisecond,
+					Multiplier: 2.00,
+				})
+			}),
 		},
 		DisableSecretVersion: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		EnableSecretVersion: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		DestroySecretVersion: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		SetIamPolicy: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		GetIamPolicy: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 		TestIamPermissions: []gax.CallOption{
+			gax.WithTimeout(60000 * time.Millisecond),
 		},
 	}
 }

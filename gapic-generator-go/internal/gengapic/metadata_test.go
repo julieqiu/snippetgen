@@ -18,7 +18,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/googleapis/gapic-generator-go/internal/txtdiff"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/txtdiff"
 	"google.golang.org/genproto/googleapis/gapic/metadata"
 	"google.golang.org/protobuf/proto"
 )

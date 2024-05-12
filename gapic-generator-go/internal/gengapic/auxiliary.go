@@ -21,7 +21,7 @@ import (
 	"strings"
 
 	longrunning "cloud.google.com/go/longrunning/autogen/longrunningpb"
-	"github.com/googleapis/gapic-generator-go/internal/pbinfo"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/pbinfo"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/types/descriptorpb"

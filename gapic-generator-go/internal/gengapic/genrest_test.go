@@ -21,8 +21,8 @@ import (
 
 	longrunning "cloud.google.com/go/longrunning/autogen/longrunningpb"
 	"github.com/google/go-cmp/cmp"
-	"github.com/googleapis/gapic-generator-go/internal/pbinfo"
-	"github.com/googleapis/gapic-generator-go/internal/txtdiff"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/pbinfo"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/txtdiff"
 	"google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/genproto/googleapis/api/httpbody"
 	"google.golang.org/genproto/googleapis/api/serviceconfig"

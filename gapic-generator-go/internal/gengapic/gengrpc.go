@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"strings"
 
-	conf "github.com/googleapis/gapic-generator-go/internal/grpc_service_config"
-	"github.com/googleapis/gapic-generator-go/internal/pbinfo"
+	conf "github.com/julieqiu/snippetgen/gapic-generator-go/internal/grpc_service_config"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/pbinfo"
 	"google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/genproto/googleapis/rpc/code"
 	"google.golang.org/protobuf/proto"

@@ -22,9 +22,9 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/googleapis/gapic-generator-go/internal/license"
-	"github.com/googleapis/gapic-generator-go/internal/pbinfo"
-	"github.com/googleapis/gapic-generator-go/internal/snippets/metadata"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/license"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/pbinfo"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/snippets/metadata"
 	"google.golang.org/protobuf/encoding/protojson"
 )
 

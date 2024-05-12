@@ -18,7 +18,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/googleapis/gapic-generator-go/internal/pbinfo"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/pbinfo"
 )
 
 // sortImports sorts the import specs,

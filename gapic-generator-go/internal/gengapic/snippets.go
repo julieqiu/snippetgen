@@ -19,8 +19,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/googleapis/gapic-generator-go/internal/pbinfo"
-	"github.com/googleapis/gapic-generator-go/internal/snippets"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/pbinfo"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/snippets"
 	"google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"

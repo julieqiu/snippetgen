@@ -21,7 +21,7 @@ import (
 
 	iam "cloud.google.com/go/iam/apiv1/iampb"
 	longrunning "cloud.google.com/go/longrunning/autogen/longrunningpb"
-	"github.com/googleapis/gapic-generator-go/internal/pbinfo"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/pbinfo"
 	"google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/genproto/googleapis/cloud/location"
 	"google.golang.org/protobuf/proto"

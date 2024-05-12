@@ -19,7 +19,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/googleapis/gapic-generator-go/internal/gengapic"
+	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/gengapic"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/pluginpb"
 )

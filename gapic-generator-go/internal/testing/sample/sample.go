@@ -183,13 +183,11 @@ func Service() *descriptorpb.ServiceDescriptorProto {
 				InputType:  proto.String(DescriptorInfoTypeName(CreateRequest)),
 				OutputType: proto.String(DescriptorInfoTypeName(Resource)),
 			},
-			/*
-				{
-					Name:       proto.String(GetMethod),
-					InputType:  proto.String(DescriptorInfoTypeName(GetRequest)),
-					OutputType: proto.String(DescriptorInfoTypeName(Resource)),
-				},
-			*/
+			{
+				Name:       proto.String(GetMethod),
+				InputType:  proto.String(DescriptorInfoTypeName(GetRequest)),
+				OutputType: proto.String(DescriptorInfoTypeName(Resource)),
+			},
 		},
 	}
 }
@@ -272,5 +270,32 @@ func File() *descriptorpb.FileDescriptorProto {
 				},
 			},
 		},
+	}
+}
+
+func ProtoFile() *descriptorpb.FileDescriptorProto {
+	return &descriptorpb.FileDescriptorProto{
+		Name:    proto.String(ProtoFilename),
+		Package: proto.String(ProtoPackage),
+		Dependency: []string{
+			"google/api/annotations.proto",
+			"google/api/client.proto",
+			"google/api/field_behavior.proto",
+			"google/api/resource.proto",
+			"google/cloud/secretmanager/v1/resources.proto",
+			"google/iam/v1/iam_policy.proto",
+			"google/iam/v1/policy.proto",
+			"google/protobuf/empty.proto",
+			"google/protobuf/field_mask.proto",
+		},
+		MessageType: []*descriptorpb.DescriptorProto{
+			InputType(CreateRequest),
+			InputType(GetRequest),
+			InputType(Resource),
+		},
+		Options: &descriptorpb.FileOptions{
+			GoPackage: proto.String(ProtoGoPackage),
+		},
+		Service: []*descriptorpb.ServiceDescriptorProto{Service()},
 	}
 }

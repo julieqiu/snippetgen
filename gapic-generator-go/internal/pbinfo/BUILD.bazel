@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "pbinfo",
+    srcs = [
+        "pbinfo.go",
+        "prim2go.go",
+    ],
+    importpath = "github.com/googleapis/gapic-generator-go/internal/pbinfo",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@org_golang_google_protobuf//proto",
+        "@org_golang_google_protobuf//types/descriptorpb",
+    ],
+)
+
+go_test(
+    name = "pbinfo_test",
+    srcs = ["pbinfo_test.go"],
+    embed = [":pbinfo"],
+    deps = [
+        "@org_golang_google_protobuf//proto",
+        "@org_golang_google_protobuf//types/descriptorpb",
+    ],
+)

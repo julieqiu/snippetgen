@@ -1,0 +1,158 @@
+// CallOptions contains the retry settings for each method of Client.
+type CallOptions struct {
+	Zip []gax.CallOption
+	Zap []gax.CallOption
+	Smack []gax.CallOption
+	ListLocations []gax.CallOption
+	GetLocation []gax.CallOption
+	SetIamPolicy []gax.CallOption
+	GetIamPolicy []gax.CallOption
+	TestIamPermissions []gax.CallOption
+	ListOperations []gax.CallOption
+	GetOperation []gax.CallOption
+	DeleteOperation []gax.CallOption
+	CancelOperation []gax.CallOption
+	WaitOperation []gax.CallOption
+}
+
+func defaultGRPCClientOptions() []option.ClientOption {
+	return []option.ClientOption{
+		internaloption.WithDefaultEndpoint("foo.googleapis.com:443"),
+		internaloption.WithDefaultEndpointTemplate("foo.UNIVERSE_DOMAIN:443"),
+		internaloption.WithDefaultMTLSEndpoint("foo.mtls.googleapis.com:443"),
+		internaloption.WithDefaultUniverseDomain("googleapis.com"),
+		internaloption.WithDefaultAudience("https://foo.googleapis.com/"),
+		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
+		internaloption.EnableJwtWithScope(),
+		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
+		grpc.MaxCallRecvMsgSize(math.MaxInt32))),
+	}
+}
+
+func defaultCallOptions() *CallOptions {
+	return &CallOptions{
+		Zip: []gax.CallOption{
+			gax.WithGRPCOptions(grpc.MaxCallSendMsgSize(123456)),
+			gax.WithGRPCOptions(grpc.MaxCallRecvMsgSize(123456)),
+			gax.WithTimeout(10000 * time.Millisecond),
+			gax.WithRetry(func() gax.Retryer {
+				return gax.OnCodes([]codes.Code{
+					codes.Unknown,
+					codes.Unavailable,
+				}, gax.Backoff{
+					Initial:    100 * time.Millisecond,
+					Max:        60000 * time.Millisecond,
+					Multiplier: 1.30,
+				})
+			}),
+		},
+		Zap: []gax.CallOption{
+			gax.WithGRPCOptions(grpc.MaxCallSendMsgSize(654321)),
+			gax.WithGRPCOptions(grpc.MaxCallRecvMsgSize(654321)),
+			gax.WithTimeout(5000 * time.Millisecond),
+			gax.WithRetry(func() gax.Retryer {
+				return gax.OnCodes([]codes.Code{
+					codes.Unknown,
+				}, gax.Backoff{
+					Initial:    10 * time.Millisecond,
+					Max:        7000 * time.Millisecond,
+					Multiplier: 1.10,
+				})
+			}),
+		},
+		Smack: []gax.CallOption{
+			gax.WithGRPCOptions(grpc.MaxCallSendMsgSize(654321)),
+			gax.WithGRPCOptions(grpc.MaxCallRecvMsgSize(654321)),
+			gax.WithTimeout(5000 * time.Millisecond),
+			gax.WithRetry(func() gax.Retryer {
+				return gax.OnCodes([]codes.Code{
+					codes.Unknown,
+				}, gax.Backoff{
+					Initial:    10 * time.Millisecond,
+					Max:        7000 * time.Millisecond,
+					Multiplier: 1.10,
+				})
+			}),
+		},
+		ListLocations: []gax.CallOption{
+		},
+		GetLocation: []gax.CallOption{
+		},
+		SetIamPolicy: []gax.CallOption{
+		},
+		GetIamPolicy: []gax.CallOption{
+		},
+		TestIamPermissions: []gax.CallOption{
+		},
+		ListOperations: []gax.CallOption{
+		},
+		GetOperation: []gax.CallOption{
+		},
+		DeleteOperation: []gax.CallOption{
+		},
+		CancelOperation: []gax.CallOption{
+		},
+		WaitOperation: []gax.CallOption{
+		},
+	}
+}
+
+func defaultRESTCallOptions() *CallOptions {
+	return &CallOptions{
+		Zip: []gax.CallOption{
+			gax.WithTimeout(10000 * time.Millisecond),
+			gax.WithRetry(func() gax.Retryer {
+				return gax.OnHTTPCodes(gax.Backoff{
+					Initial:    100 * time.Millisecond,
+					Max:        60000 * time.Millisecond,
+					Multiplier: 1.30,
+				},
+				http.StatusInternalServerError,
+				http.StatusServiceUnavailable)
+			}),
+		},
+		Zap: []gax.CallOption{
+			gax.WithTimeout(5000 * time.Millisecond),
+			gax.WithRetry(func() gax.Retryer {
+				return gax.OnHTTPCodes(gax.Backoff{
+					Initial:    10 * time.Millisecond,
+					Max:        7000 * time.Millisecond,
+					Multiplier: 1.10,
+				},
+				http.StatusInternalServerError)
+			}),
+		},
+		Smack: []gax.CallOption{
+			gax.WithTimeout(5000 * time.Millisecond),
+			gax.WithRetry(func() gax.Retryer {
+				return gax.OnHTTPCodes(gax.Backoff{
+					Initial:    10 * time.Millisecond,
+					Max:        7000 * time.Millisecond,
+					Multiplier: 1.10,
+				},
+				http.StatusInternalServerError)
+			}),
+		},
+		ListLocations: []gax.CallOption{
+		},
+		GetLocation: []gax.CallOption{
+		},
+		SetIamPolicy: []gax.CallOption{
+		},
+		GetIamPolicy: []gax.CallOption{
+		},
+		TestIamPermissions: []gax.CallOption{
+		},
+		ListOperations: []gax.CallOption{
+		},
+		GetOperation: []gax.CallOption{
+		},
+		DeleteOperation: []gax.CallOption{
+		},
+		CancelOperation: []gax.CallOption{
+		},
+		WaitOperation: []gax.CallOption{
+		},
+	}
+}
+

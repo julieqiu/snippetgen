@@ -1,0 +1,15 @@
+func (c *fooGRPCClient) BidiThings(ctx context.Context, opts ...gax.CallOption) (mypackagepb.Foo_BidiThingsClient, error) {
+	ctx = gax.InsertMetadataIntoOutgoingContext(ctx, c.xGoogHeaders...)
+	var resp mypackagepb.Foo_BidiThingsClient
+	opts = append((*c.CallOptions).BidiThings[0:len((*c.CallOptions).BidiThings):len((*c.CallOptions).BidiThings)], opts...)
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.fooClient.BidiThings(ctx, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+

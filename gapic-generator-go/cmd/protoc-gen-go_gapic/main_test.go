@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/gengapic"
@@ -25,7 +26,11 @@ func TestGenSecretManager(t *testing.T) {
 	}
 	for _, file := range output.File {
 		if file.Name != nil {
-			fmt.Println(*file.Name)
+			if strings.Contains(*file.Name, "Create") {
+				fmt.Println(*file.Name)
+				// fmt.Println(*file.Content)
+			}
+			// fmt.Println(strings.Repeat("-", 80))
 		}
 	}
 }

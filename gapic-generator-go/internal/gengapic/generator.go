@@ -262,9 +262,10 @@ func (g *generator) commit(fileName, pkgName string) int {
 		}
 	}
 
-	g.resp.File = append(g.resp.File, &pluginpb.CodeGeneratorResponse_File{
+	cg := &pluginpb.CodeGeneratorResponse_File{
 		Content: proto.String(body),
-	})
+	}
+	g.resp.File = append(g.resp.File, cg)
 
 	return lineCount + len(strings.Split(body, "\n"))
 }

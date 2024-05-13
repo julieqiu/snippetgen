@@ -31,6 +31,7 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
+	locationpb "google.golang.org/genproto/googleapis/cloud/location"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/protobuf/proto"
@@ -55,6 +56,8 @@ type SecretManagerCallOptions struct {
 	SetIamPolicy []gax.CallOption
 	GetIamPolicy []gax.CallOption
 	TestIamPermissions []gax.CallOption
+	GetLocation []gax.CallOption
+	ListLocations []gax.CallOption
 }
 
 func defaultSecretManagerGRPCClientOptions() []option.ClientOption {
@@ -128,6 +131,10 @@ func defaultSecretManagerCallOptions() *SecretManagerCallOptions {
 		TestIamPermissions: []gax.CallOption{
 			gax.WithTimeout(60000 * time.Millisecond),
 		},
+		GetLocation: []gax.CallOption{
+		},
+		ListLocations: []gax.CallOption{
+		},
 	}
 }
 
@@ -151,6 +158,8 @@ type internalSecretManagerClient interface {
 	SetIamPolicy(context.Context, *iampb.SetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
 	GetIamPolicy(context.Context, *iampb.GetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
 	TestIamPermissions(context.Context, *iampb.TestIamPermissionsRequest, ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error)
+	GetLocation(context.Context, *locationpb.GetLocationRequest, ...gax.CallOption) (*locationpb.Location, error)
+	ListLocations(context.Context, *locationpb.ListLocationsRequest, ...gax.CallOption) *LocationIterator
 }
 
 // SecretManagerClient is a client for interacting with Secret Manager API.
@@ -201,13 +210,15 @@ func (c *SecretManagerClient) ListSecrets(ctx context.Context, req *secretmanage
 	return c.internalClient.ListSecrets(ctx, req, opts...)
 }
 
-// CreateSecret creates a new Secret containing no SecretVersions.
+// CreateSecret creates a new Secret containing no
+// SecretVersions.
 func (c *SecretManagerClient) CreateSecret(ctx context.Context, req *secretmanagerpb.CreateSecretRequest, opts ...gax.CallOption) (*secretmanagerpb.Secret, error) {
 	return c.internalClient.CreateSecret(ctx, req, opts...)
 }
 
-// AddSecretVersion creates a new SecretVersion containing secret data and attaches
-// it to an existing Secret.
+// AddSecretVersion creates a new SecretVersion
+// containing secret data and attaches it to an existing
+// Secret.
 func (c *SecretManagerClient) AddSecretVersion(ctx context.Context, req *secretmanagerpb.AddSecretVersionRequest, opts ...gax.CallOption) (*secretmanagerpb.SecretVersion, error) {
 	return c.internalClient.AddSecretVersion(ctx, req, opts...)
 }
@@ -217,7 +228,8 @@ func (c *SecretManagerClient) GetSecret(ctx context.Context, req *secretmanagerp
 	return c.internalClient.GetSecret(ctx, req, opts...)
 }
 
-// UpdateSecret updates metadata of an existing Secret.
+// UpdateSecret updates metadata of an existing
+// Secret.
 func (c *SecretManagerClient) UpdateSecret(ctx context.Context, req *secretmanagerpb.UpdateSecretRequest, opts ...gax.CallOption) (*secretmanagerpb.Secret, error) {
 	return c.internalClient.UpdateSecret(ctx, req, opts...)
 }
@@ -227,13 +239,14 @@ func (c *SecretManagerClient) DeleteSecret(ctx context.Context, req *secretmanag
 	return c.internalClient.DeleteSecret(ctx, req, opts...)
 }
 
-// ListSecretVersions lists SecretVersions. This call does not return secret
-// data.
+// ListSecretVersions lists SecretVersions. This
+// call does not return secret data.
 func (c *SecretManagerClient) ListSecretVersions(ctx context.Context, req *secretmanagerpb.ListSecretVersionsRequest, opts ...gax.CallOption) *SecretVersionIterator {
 	return c.internalClient.ListSecretVersions(ctx, req, opts...)
 }
 
-// GetSecretVersion gets metadata for a SecretVersion.
+// GetSecretVersion gets metadata for a
+// SecretVersion.
 //
 // projects/*/secrets/*/versions/latest is an alias to the most recently
 // created SecretVersion.
@@ -241,7 +254,8 @@ func (c *SecretManagerClient) GetSecretVersion(ctx context.Context, req *secretm
 	return c.internalClient.GetSecretVersion(ctx, req, opts...)
 }
 
-// AccessSecretVersion accesses a SecretVersion. This call returns the secret data.
+// AccessSecretVersion accesses a SecretVersion.
+// This call returns the secret data.
 //
 // projects/*/secrets/*/versions/latest is an alias to the most recently
 // created SecretVersion.
@@ -251,7 +265,8 @@ func (c *SecretManagerClient) AccessSecretVersion(ctx context.Context, req *secr
 
 // DisableSecretVersion disables a SecretVersion.
 //
-// Sets the state of the SecretVersion to
+// Sets the state of the
+// SecretVersion to
 // DISABLED.
 func (c *SecretManagerClient) DisableSecretVersion(ctx context.Context, req *secretmanagerpb.DisableSecretVersionRequest, opts ...gax.CallOption) (*secretmanagerpb.SecretVersion, error) {
 	return c.internalClient.DisableSecretVersion(ctx, req, opts...)
@@ -259,7 +274,8 @@ func (c *SecretManagerClient) DisableSecretVersion(ctx context.Context, req *sec
 
 // EnableSecretVersion enables a SecretVersion.
 //
-// Sets the state of the SecretVersion to
+// Sets the state of the
+// SecretVersion to
 // ENABLED.
 func (c *SecretManagerClient) EnableSecretVersion(ctx context.Context, req *secretmanagerpb.EnableSecretVersionRequest, opts ...gax.CallOption) (*secretmanagerpb.SecretVersion, error) {
 	return c.internalClient.EnableSecretVersion(ctx, req, opts...)
@@ -267,9 +283,10 @@ func (c *SecretManagerClient) EnableSecretVersion(ctx context.Context, req *secr
 
 // DestroySecretVersion destroys a SecretVersion.
 //
-// Sets the state of the SecretVersion to
-// DESTROYED and irrevocably destroys the
-// secret data.
+// Sets the state of the
+// SecretVersion to
+// DESTROYED
+// and irrevocably destroys the secret data.
 func (c *SecretManagerClient) DestroySecretVersion(ctx context.Context, req *secretmanagerpb.DestroySecretVersionRequest, opts ...gax.CallOption) (*secretmanagerpb.SecretVersion, error) {
 	return c.internalClient.DestroySecretVersion(ctx, req, opts...)
 }
@@ -277,8 +294,10 @@ func (c *SecretManagerClient) DestroySecretVersion(ctx context.Context, req *sec
 // SetIamPolicy sets the access control policy on the specified secret. Replaces any
 // existing policy.
 //
-// Permissions on SecretVersions are enforced according
-// to the policy set on the associated Secret.
+// Permissions on
+// SecretVersions are enforced
+// according to the policy set on the associated
+// Secret.
 func (c *SecretManagerClient) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
 	return c.internalClient.SetIamPolicy(ctx, req, opts...)
 }
@@ -300,6 +319,16 @@ func (c *SecretManagerClient) TestIamPermissions(ctx context.Context, req *iampb
 	return c.internalClient.TestIamPermissions(ctx, req, opts...)
 }
 
+// GetLocation gets information about a location.
+func (c *SecretManagerClient) GetLocation(ctx context.Context, req *locationpb.GetLocationRequest, opts ...gax.CallOption) (*locationpb.Location, error) {
+	return c.internalClient.GetLocation(ctx, req, opts...)
+}
+
+// ListLocations lists information about the supported locations for this service.
+func (c *SecretManagerClient) ListLocations(ctx context.Context, req *locationpb.ListLocationsRequest, opts ...gax.CallOption) *LocationIterator {
+	return c.internalClient.ListLocations(ctx, req, opts...)
+}
+
 // secretManagerGRPCClient is a client for interacting with Secret Manager API over gRPC transport.
 //
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
@@ -312,6 +341,8 @@ type secretManagerGRPCClient struct {
 
 	// The gRPC API client.
 	secretManagerClient secretmanagerpb.SecretManagerServiceClient
+
+	locationsClient locationpb.LocationsClient
 
 	// The x-goog-* metadata to be sent with each request.
 	xGoogHeaders []string
@@ -348,6 +379,7 @@ func NewSecretManagerClient(ctx context.Context, opts ...option.ClientOption) (*
 		connPool:    connPool,
 		secretManagerClient: secretmanagerpb.NewSecretManagerServiceClient(connPool),
 		CallOptions: &client.CallOptions,
+		locationsClient: locationpb.NewLocationsClient(connPool),
 
 	}
 	c.setGoogleClientInfo()
@@ -702,4 +734,68 @@ func (c *secretManagerGRPCClient) TestIamPermissions(ctx context.Context, req *i
 		return nil, err
 	}
 	return resp, nil
+}
+
+func (c *secretManagerGRPCClient) GetLocation(ctx context.Context, req *locationpb.GetLocationRequest, opts ...gax.CallOption) (*locationpb.Location, error) {
+	hds := []string{"x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName()))}
+
+	hds = append(c.xGoogHeaders, hds...)
+	ctx = gax.InsertMetadataIntoOutgoingContext(ctx, hds...)
+	opts = append((*c.CallOptions).GetLocation[0:len((*c.CallOptions).GetLocation):len((*c.CallOptions).GetLocation)], opts...)
+	var resp *locationpb.Location
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.locationsClient.GetLocation(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *secretManagerGRPCClient) ListLocations(ctx context.Context, req *locationpb.ListLocationsRequest, opts ...gax.CallOption) *LocationIterator {
+	hds := []string{"x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName()))}
+
+	hds = append(c.xGoogHeaders, hds...)
+	ctx = gax.InsertMetadataIntoOutgoingContext(ctx, hds...)
+	opts = append((*c.CallOptions).ListLocations[0:len((*c.CallOptions).ListLocations):len((*c.CallOptions).ListLocations)], opts...)
+	it := &LocationIterator{}
+	req = proto.Clone(req).(*locationpb.ListLocationsRequest)
+	it.InternalFetch = func(pageSize int, pageToken string) ([]*locationpb.Location, string, error) {
+		resp := &locationpb.ListLocationsResponse{}
+		if pageToken != "" {
+			req.PageToken = pageToken
+		}
+		if pageSize > math.MaxInt32 {
+			req.PageSize = math.MaxInt32
+		} else if pageSize != 0 {
+			req.PageSize = int32(pageSize)
+		}
+		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+			var err error
+			resp, err = c.locationsClient.ListLocations(ctx, req, settings.GRPC...)
+			return err
+		}, opts...)
+		if err != nil {
+			return nil, "", err
+		}
+
+		it.Response = resp
+		return resp.GetLocations(), resp.GetNextPageToken(), nil
+	}
+	fetch := func(pageSize int, pageToken string) (string, error) {
+		items, nextPageToken, err := it.InternalFetch(pageSize, pageToken)
+		if err != nil {
+			return "", err
+		}
+		it.items = append(it.items, items...)
+		return nextPageToken, nil
+	}
+
+	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
+	it.pageInfo.MaxSize = int(req.GetPageSize())
+	it.pageInfo.Token = req.GetPageToken()
+
+	return it
 }

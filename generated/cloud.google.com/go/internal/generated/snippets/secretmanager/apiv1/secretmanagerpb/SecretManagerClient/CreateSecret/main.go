@@ -71,6 +71,13 @@ func main() {
 			}
 			VersionAliases: "",
 			Annotations: "",
+			VersionDestroyTtl: &durationpb.Duration{
+				Seconds: "",
+				Nanos: "",
+			}
+			CustomerManagedEncryption: &secretmanagerpb.CustomerManagedEncryption{
+				KmsKeyName: "",
+			}
 		}
 	}
 	resp, err := c.CreateSecret(ctx, req)

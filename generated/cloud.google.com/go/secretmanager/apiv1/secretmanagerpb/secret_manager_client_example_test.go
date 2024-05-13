@@ -23,6 +23,7 @@ import (
 	iampb "cloud.google.com/go/iam/apiv1/iampb"
 	secretmanagerpb "cloud.google.com/go/secretmanager/apiv1/secretmanagerpb"
 	"google.golang.org/api/iterator"
+	locationpb "google.golang.org/genproto/googleapis/cloud/location"
 )
 
 func ExampleNewSecretManagerClient() {
@@ -145,6 +146,13 @@ func ExampleSecretManagerClient_CreateSecret() {
 			}
 			VersionAliases: "",
 			Annotations: "",
+			VersionDestroyTtl: &durationpb.Duration{
+				Seconds: "",
+				Nanos: "",
+			}
+			CustomerManagedEncryption: &secretmanagerpb.CustomerManagedEncryption{
+				KmsKeyName: "",
+			}
 		}
 	}
 	resp, err := c.CreateSecret(ctx, req)
@@ -538,6 +546,13 @@ func ExampleSecretManagerClient_UpdateSecret() {
 			}
 			VersionAliases: "",
 			Annotations: "",
+			VersionDestroyTtl: &durationpb.Duration{
+				Seconds: "",
+				Nanos: "",
+			}
+			CustomerManagedEncryption: &secretmanagerpb.CustomerManagedEncryption{
+				KmsKeyName: "",
+			}
 		}
 		UpdateMask: &secretmanagerpb.FieldMask{
 			Paths: "",
@@ -549,4 +564,71 @@ func ExampleSecretManagerClient_UpdateSecret() {
 	}
 	// TODO: Use resp.
 	_ = resp
+}
+
+func ExampleSecretManagerClient_GetLocation() {
+	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
+	c, err := secretmanagerpb.NewSecretManagerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/google.golang.org/genproto/googleapis/cloud/location#GetLocationRequest.
+	req := &locationpb.GetLocationRequest{
+		Name: "",
+	}
+	resp, err := c.GetLocation(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleSecretManagerClient_ListLocations() {
+	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
+	c, err := secretmanagerpb.NewSecretManagerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/google.golang.org/genproto/googleapis/cloud/location#ListLocationsRequest.
+	req := &locationpb.ListLocationsRequest{
+		Name: "",
+		Filter: "",
+		PageSize: "",
+		PageToken: "",
+	}
+	it := c.ListLocations(ctx, req)
+	for {
+		resp, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			// TODO: Handle error.
+		}
+		// TODO: Use resp.
+		_ = resp
+
+		// If you need to access the underlying RPC response,
+		// you can do so by casting the `Response` as below.
+		// Otherwise, remove this line. Only populated after
+		// first call to Next(). Not safe for concurrent access.
+		_ = it.Response.(*locationpb.ListLocationsResponse)
+	}
 }

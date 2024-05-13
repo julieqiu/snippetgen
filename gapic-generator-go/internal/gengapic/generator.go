@@ -42,6 +42,8 @@ type generator struct {
 	// Protobuf descriptor properties
 	descInfo pbinfo.Info
 
+	msgInfo map[string]*descriptorpb.DescriptorProto
+
 	// Maps proto elements to their comments
 	comments map[protoiface.MessageV1]string
 

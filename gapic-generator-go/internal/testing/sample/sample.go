@@ -227,6 +227,24 @@ func File() *descriptorpb.FileDescriptorProto {
 				},
 			},
 		},
+	}
+}
+
+func ProtoFile() *descriptorpb.FileDescriptorProto {
+	return &descriptorpb.FileDescriptorProto{
+		Name:    proto.String(ProtoFilename),
+		Package: proto.String(ProtoPackage),
+		Dependency: []string{
+			"google/api/annotations.proto",
+			"google/api/client.proto",
+			"google/api/field_behavior.proto",
+			"google/api/resource.proto",
+			"google/cloud/secretmanager/v1/resources.proto",
+			"google/iam/v1/iam_policy.proto",
+			"google/iam/v1/policy.proto",
+			"google/protobuf/empty.proto",
+			"google/protobuf/field_mask.proto",
+		},
 		MessageType: []*descriptorpb.DescriptorProto{
 			{
 				Name: proto.String(CreateRequest),
@@ -250,48 +268,25 @@ func File() *descriptorpb.FileDescriptorProto {
 				},
 			},
 			{
-				Name: proto.String(CreateRequest),
+				Name: proto.String(GetRequest),
 				Field: []*descriptorpb.FieldDescriptorProto{
 					{
-						Name:   proto.String("parent"),
+						Name:   proto.String("name"),
 						Number: proto.Int32(int32(1)),
 						Type:   typep(descriptorpb.FieldDescriptorProto_TYPE_STRING),
 					},
+				},
+			},
+			{
+				Name: proto.String(Resource),
+				Field: []*descriptorpb.FieldDescriptorProto{
 					{
-						Name:   proto.String("secret_id"),
-						Number: proto.Int32(int32(2)),
+						Name:   proto.String("name"),
+						Number: proto.Int32(int32(1)),
 						Type:   typep(descriptorpb.FieldDescriptorProto_TYPE_STRING),
-					},
-					{
-						Name:   proto.String("secret"),
-						Number: proto.Int32(int32(3)),
-						Type:   typep(descriptorpb.FieldDescriptorProto_TYPE_MESSAGE),
 					},
 				},
 			},
-		},
-	}
-}
-
-func ProtoFile() *descriptorpb.FileDescriptorProto {
-	return &descriptorpb.FileDescriptorProto{
-		Name:    proto.String(ProtoFilename),
-		Package: proto.String(ProtoPackage),
-		Dependency: []string{
-			"google/api/annotations.proto",
-			"google/api/client.proto",
-			"google/api/field_behavior.proto",
-			"google/api/resource.proto",
-			"google/cloud/secretmanager/v1/resources.proto",
-			"google/iam/v1/iam_policy.proto",
-			"google/iam/v1/policy.proto",
-			"google/protobuf/empty.proto",
-			"google/protobuf/field_mask.proto",
-		},
-		MessageType: []*descriptorpb.DescriptorProto{
-			InputType(CreateRequest),
-			InputType(GetRequest),
-			InputType(Resource),
 		},
 		Options: &descriptorpb.FileOptions{
 			GoPackage: proto.String(ProtoGoPackage),

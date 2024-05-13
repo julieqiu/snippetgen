@@ -19,6 +19,7 @@ import (
 	"strings"
 
 	longrunning "cloud.google.com/go/longrunning/autogen/longrunningpb"
+	"github.com/iancoleman/strcase"
 	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/pbinfo"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"
@@ -134,11 +135,58 @@ func (g *generator) exampleMethodBody(pkgName, servName string, m *descriptorpb.
 	}
 	g.exampleInitClient(pkgName, s)
 
+	req := map[string]interface{}{}
+	in2 := inType.(*descriptorpb.DescriptorProto)
+	for _, f := range in2.Field {
+		if *in2.Name != "CreateSecretRequest" {
+			continue
+		}
+		if f.Name == nil {
+			// parts := strings.Split(inSpec, ".")
+			// name := parts[len(parts)-1]
+			// p(`  %s: ""`, inSpec)
+			continue
+		}
+		if f.TypeName == nil {
+			req[strcase.ToCamel(*f.Name)] = "TODO"
+			continue
+		}
+
+		// The field is a message.
+		msg := g.msgInfo[*f.TypeName]
+		if msg == nil {
+			req[strcase.ToCamel(*f.Name)] = "TODO 2"
+			continue
+		}
+		for _, f2 := range msg.Field {
+			// parts := strings.Split(*f2.Name, ".")
+			// name := parts[len(parts)-1]
+			// fmt.Println(name)
+
+			// This is recursive.
+			if f2.TypeName == nil {
+				typ := fmt.Sprintf("&%s.%s{}", inSpec.Name, *f.TypeName)
+				req[strcase.ToCamel(*f.Name)] = typ
+			}
+
+			// The field is a message.
+			/*
+				fmt.Println(name)
+				if f2.TypeName != nil {
+					fmt.Println(*f2.TypeName)
+				}
+			*/
+		}
+	}
+
 	if !m.GetClientStreaming() && !m.GetServerStreaming() {
 		p("")
 		p("req := &%s.%s{", inSpec.Name, inType.GetName())
 		p("  // TODO: Fill request struct fields.")
 		p("  // See https://pkg.go.dev/%s#%s.", inSpec.Path, inType.GetName())
+		for k, v := range req {
+			p("%s: %q,", k, v)
+		}
 		p("}")
 	}
 

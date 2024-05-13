@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"strings"
 	"testing"
 
 	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/gengapic"
@@ -20,17 +18,7 @@ func TestGenSecretManager(t *testing.T) {
 		Parameter:      proto.String(options),
 		ProtoFile:      []*descriptorpb.FileDescriptorProto{sample.ProtoFile()},
 	}
-	output, err := gengapic.Gen(input)
-	if err != nil {
+	if _, err := gengapic.Gen(input); err != nil {
 		t.Fatal(err)
-	}
-	for _, file := range output.File {
-		if file.Name != nil {
-			if strings.Contains(*file.Name, "Create") {
-				fmt.Println(*file.Name)
-				// fmt.Println(*file.Content)
-			}
-			// fmt.Println(strings.Repeat("-", 80))
-		}
 	}
 }

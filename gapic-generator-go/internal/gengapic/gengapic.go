@@ -70,6 +70,15 @@ func Gen(genReq *pluginpb.CodeGeneratorRequest) (*pluginpb.CodeGeneratorResponse
 		g.apiName = g.serviceConfig.GetTitle()
 	}
 
+	g.msgInfo = map[string]*descriptorpb.DescriptorProto{}
+	for _, pf := range genReq.ProtoFile {
+		for _, msg := range pf.MessageType {
+			if msg.Name != nil {
+				g.msgInfo[*msg.Name] = msg
+			}
+		}
+	}
+
 	protoPkg := g.descInfo.ParentFile[genServs[0]].GetPackage()
 
 	if op, ok := g.descInfo.Type[fmt.Sprintf(".%s.Operation", protoPkg)]; g.opts.diregapic && ok {

@@ -21,6 +21,7 @@ import (
 	longrunning "cloud.google.com/go/longrunning/autogen/longrunningpb"
 	"github.com/iancoleman/strcase"
 	"github.com/julieqiu/snippetgen/gapic-generator-go/internal/pbinfo"
+	"google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"
 )
@@ -141,7 +142,6 @@ func (g *generator) exampleMethodBody(pkgName, servName string, m *descriptorpb.
 	g.exampleInitClient(pkgName, s)
 
 	in2 := inType.(*descriptorpb.DescriptorProto)
-
 	if !m.GetClientStreaming() && !m.GetServerStreaming() {
 		p("")
 		p("  // TODO: Fill request struct fields.")
@@ -230,15 +230,43 @@ func (g *generator) printStructFields(f *descriptorpb.FieldDescriptorProto) {
 	p := g.printf
 
 	if f.TypeName == nil {
-		p("%s: %q,\n", strcase.ToCamel(*f.Name), "")
+		p("%s: %q,\n", strcase.ToCamel(*f.Name), g.fieldPattern(f))
 		return
 	}
 
 	msg := g.getMessage(f)
 	if msg == nil {
-		p("%s: %q,\n", strcase.ToCamel(*f.Name), "")
+		p("%s: %q,\n", strcase.ToCamel(*f.Name), g.fieldPattern(f))
 		return
 	}
+}
+
+func (g *generator) fieldPattern(f *descriptorpb.FieldDescriptorProto) string {
+	r := proto.GetExtension(f.GetOptions(), annotations.E_ResourceReference)
+	a := r.(*annotations.ResourceReference)
+	if a == nil {
+		return ""
+	}
+	// secretmanager.googleapis.com/Secret
+	parts := strings.Split(a.Type, "/")
+	if len(parts) != 2 {
+		return ""
+	}
+	parts2 := strings.Split(parts[0], ".")
+	if len(parts2) < 1 {
+		return ""
+	}
+	typName := fmt.Sprintf(".google.cloud.%s.v1.%s", parts2[0], parts[1])
+	inType2 := g.descInfo.Type[typName]
+	if inType2 == nil {
+		return ""
+	}
+	b := inType2.(*descriptorpb.DescriptorProto)
+
+	// GetResource
+	r2 := proto.GetExtension(b.GetOptions(), annotations.E_Resource)
+	resource := r2.(*annotations.ResourceDescriptor)
+	return resource.Pattern[0]
 }
 
 func (g *generator) exampleLROCall(m *descriptorpb.MethodDescriptorProto) {

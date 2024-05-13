@@ -40,7 +40,7 @@ func main() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#GetSecretVersionRequest.
 	req := &secretmanagerpb.GetSecretVersionRequest{
-		Name: "",
+		Name: "projects/{project}/secrets/{secret}/versions/{secret_version}",
 	}
 	resp, err := c.GetSecretVersion(ctx, req)
 	if err != nil {

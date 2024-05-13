@@ -41,7 +41,7 @@ func main() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#ListSecretVersionsRequest.
 	req := &secretmanagerpb.ListSecretVersionsRequest{
-		Parent: "",
+		Parent: "projects/{project}/secrets/{secret}",
 		PageSize: "",
 		PageToken: "",
 		Filter: "",

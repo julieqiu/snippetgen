@@ -40,7 +40,7 @@ func main() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DeleteSecretRequest.
 	req := &secretmanagerpb.DeleteSecretRequest{
-		Name: "",
+		Name: "projects/{project}/secrets/{secret}",
 		Etag: "",
 	}
 	err = c.DeleteSecret(ctx, req)

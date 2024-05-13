@@ -40,7 +40,7 @@ func main() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DisableSecretVersionRequest.
 	req := &secretmanagerpb.DisableSecretVersionRequest{
-		Name: "",
+		Name: "projects/{project}/secrets/{secret}/versions/{secret_version}",
 		Etag: "",
 	}
 	resp, err := c.DisableSecretVersion(ctx, req)

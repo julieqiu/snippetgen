@@ -19,6 +19,7 @@ package sample
 import (
 	"fmt"
 
+	"google.golang.org/genproto/googleapis/api/annotations"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"
 )
@@ -230,6 +231,87 @@ func File() *descriptorpb.FileDescriptorProto {
 	}
 }
 
+func CreateRequestMessage() *descriptorpb.DescriptorProto {
+	msg := &descriptorpb.DescriptorProto{
+		Name: proto.String(CreateRequest),
+		Field: []*descriptorpb.FieldDescriptorProto{
+			{
+				Name:    proto.String("parent"),
+				Number:  proto.Int32(int32(1)),
+				Type:    typep(descriptorpb.FieldDescriptorProto_TYPE_STRING),
+				Options: &descriptorpb.FieldOptions{},
+			},
+			{
+				Name:   proto.String("secret_id"),
+				Number: proto.Int32(int32(2)),
+				Type:   typep(descriptorpb.FieldDescriptorProto_TYPE_STRING),
+			},
+			{
+				Name:     proto.String("secret"),
+				Number:   proto.Int32(int32(3)),
+				Type:     typep(descriptorpb.FieldDescriptorProto_TYPE_MESSAGE),
+				TypeName: proto.String(Resource),
+			},
+		},
+		Options: &descriptorpb.MessageOptions{},
+	}
+	proto.SetExtension(
+		msg.Field[0].GetOptions(),
+		annotations.E_ResourceReference,
+		&annotations.ResourceReference{
+			Type: fmt.Sprintf("%s/%s", ServiceURL, Resource),
+		},
+	)
+	return msg
+}
+
+func ResourceMessage() *descriptorpb.DescriptorProto {
+	msg := &descriptorpb.DescriptorProto{
+		Name: proto.String(Resource),
+		Field: []*descriptorpb.FieldDescriptorProto{
+			{
+				Name:   proto.String("name"),
+				Number: proto.Int32(int32(1)),
+				Type:   typep(descriptorpb.FieldDescriptorProto_TYPE_STRING),
+			},
+		},
+		Options: &descriptorpb.MessageOptions{},
+	}
+	proto.SetExtension(
+		msg.GetOptions(),
+		annotations.E_Resource,
+		&annotations.ResourceDescriptor{
+			Type:     fmt.Sprintf("%s/%s", ServiceURL, Resource),
+			Pattern:  []string{"projects/{project}/secrets/{secret}", "projects/{project}/locations/{location}/secrets/{secret}"},
+			Plural:   "secrets",
+			Singular: "secret",
+		})
+	return msg
+}
+
+func GetRequestMessage() *descriptorpb.DescriptorProto {
+	msg := &descriptorpb.DescriptorProto{
+		Name: proto.String(GetRequest),
+		Field: []*descriptorpb.FieldDescriptorProto{
+			{
+				Name:    proto.String("name"),
+				Number:  proto.Int32(int32(1)),
+				Type:    typep(descriptorpb.FieldDescriptorProto_TYPE_STRING),
+				Options: &descriptorpb.FieldOptions{},
+			},
+		},
+		Options: &descriptorpb.MessageOptions{},
+	}
+	proto.SetExtension(
+		msg.Field[0].GetOptions(),
+		annotations.E_ResourceReference,
+		&annotations.ResourceReference{
+			Type: fmt.Sprintf("%s/%s", ServiceURL, Resource),
+		},
+	)
+	return msg
+}
+
 func ProtoFile() *descriptorpb.FileDescriptorProto {
 	return &descriptorpb.FileDescriptorProto{
 		Name:    proto.String(ProtoFilename),
@@ -246,47 +328,9 @@ func ProtoFile() *descriptorpb.FileDescriptorProto {
 			"google/protobuf/field_mask.proto",
 		},
 		MessageType: []*descriptorpb.DescriptorProto{
-			{
-				Name: proto.String(CreateRequest),
-				Field: []*descriptorpb.FieldDescriptorProto{
-					{
-						Name:   proto.String("parent"),
-						Number: proto.Int32(int32(1)),
-						Type:   typep(descriptorpb.FieldDescriptorProto_TYPE_STRING),
-					},
-					{
-						Name:   proto.String("secret_id"),
-						Number: proto.Int32(int32(2)),
-						Type:   typep(descriptorpb.FieldDescriptorProto_TYPE_STRING),
-					},
-					{
-						Name:     proto.String("secret"),
-						Number:   proto.Int32(int32(3)),
-						Type:     typep(descriptorpb.FieldDescriptorProto_TYPE_MESSAGE),
-						TypeName: proto.String(Resource),
-					},
-				},
-			},
-			{
-				Name: proto.String(GetRequest),
-				Field: []*descriptorpb.FieldDescriptorProto{
-					{
-						Name:   proto.String("name"),
-						Number: proto.Int32(int32(1)),
-						Type:   typep(descriptorpb.FieldDescriptorProto_TYPE_STRING),
-					},
-				},
-			},
-			{
-				Name: proto.String(Resource),
-				Field: []*descriptorpb.FieldDescriptorProto{
-					{
-						Name:   proto.String("name"),
-						Number: proto.Int32(int32(1)),
-						Type:   typep(descriptorpb.FieldDescriptorProto_TYPE_STRING),
-					},
-				},
-			},
+			CreateRequestMessage(),
+			GetRequestMessage(),
+			ResourceMessage(),
 		},
 		Options: &descriptorpb.FileOptions{
 			GoPackage: proto.String(ProtoGoPackage),

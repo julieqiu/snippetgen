@@ -58,7 +58,7 @@ func ExampleSecretManagerClient_AccessSecretVersion() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#AccessSecretVersionRequest.
 	req := &secretmanagerpb.AccessSecretVersionRequest{
-		Name: "",
+		Name: "projects/{project}/secrets/{secret}/versions/{secret_version}",
 	}
 	resp, err := c.AccessSecretVersion(ctx, req)
 	if err != nil {
@@ -84,7 +84,7 @@ func ExampleSecretManagerClient_AddSecretVersion() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#AddSecretVersionRequest.
 	req := &secretmanagerpb.AddSecretVersionRequest{
-		Parent: "",
+		Parent: "projects/{project}/secrets/{secret}",
 		Payload: &secretmanagerpb.SecretPayload{
 			Data: "",
 			DataCrc32C: "",
@@ -171,7 +171,7 @@ func ExampleSecretManagerClient_DeleteSecret() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DeleteSecretRequest.
 	req := &secretmanagerpb.DeleteSecretRequest{
-		Name: "",
+		Name: "projects/{project}/secrets/{secret}",
 		Etag: "",
 	}
 	err = c.DeleteSecret(ctx, req)
@@ -196,7 +196,7 @@ func ExampleSecretManagerClient_DestroySecretVersion() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DestroySecretVersionRequest.
 	req := &secretmanagerpb.DestroySecretVersionRequest{
-		Name: "",
+		Name: "projects/{project}/secrets/{secret}/versions/{secret_version}",
 		Etag: "",
 	}
 	resp, err := c.DestroySecretVersion(ctx, req)
@@ -223,7 +223,7 @@ func ExampleSecretManagerClient_DisableSecretVersion() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DisableSecretVersionRequest.
 	req := &secretmanagerpb.DisableSecretVersionRequest{
-		Name: "",
+		Name: "projects/{project}/secrets/{secret}/versions/{secret_version}",
 		Etag: "",
 	}
 	resp, err := c.DisableSecretVersion(ctx, req)
@@ -250,7 +250,7 @@ func ExampleSecretManagerClient_EnableSecretVersion() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#EnableSecretVersionRequest.
 	req := &secretmanagerpb.EnableSecretVersionRequest{
-		Name: "",
+		Name: "projects/{project}/secrets/{secret}/versions/{secret_version}",
 		Etag: "",
 	}
 	resp, err := c.EnableSecretVersion(ctx, req)
@@ -306,7 +306,7 @@ func ExampleSecretManagerClient_GetSecret() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#GetSecretRequest.
 	req := &secretmanagerpb.GetSecretRequest{
-		Name: "",
+		Name: "projects/{project}/secrets/{secret}",
 	}
 	resp, err := c.GetSecret(ctx, req)
 	if err != nil {
@@ -332,7 +332,7 @@ func ExampleSecretManagerClient_GetSecretVersion() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#GetSecretVersionRequest.
 	req := &secretmanagerpb.GetSecretVersionRequest{
-		Name: "",
+		Name: "projects/{project}/secrets/{secret}/versions/{secret_version}",
 	}
 	resp, err := c.GetSecretVersion(ctx, req)
 	if err != nil {
@@ -358,7 +358,7 @@ func ExampleSecretManagerClient_ListSecretVersions() {
 	// TODO: Fill request struct fields.
 	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#ListSecretVersionsRequest.
 	req := &secretmanagerpb.ListSecretVersionsRequest{
-		Parent: "",
+		Parent: "projects/{project}/secrets/{secret}",
 		PageSize: "",
 		PageToken: "",
 		Filter: "",

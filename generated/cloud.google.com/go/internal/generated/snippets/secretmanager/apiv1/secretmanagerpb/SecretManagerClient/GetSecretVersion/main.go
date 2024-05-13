@@ -37,9 +37,10 @@ func main() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#GetSecretVersionRequest.
 	req := &secretmanagerpb.GetSecretVersionRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#GetSecretVersionRequest.
+		Name: "",
 	}
 	resp, err := c.GetSecretVersion(ctx, req)
 	if err != nil {

@@ -38,9 +38,26 @@ func main() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/iam/apiv1/iampb#SetIamPolicyRequest.
 	req := &iampb.SetIamPolicyRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/iam/apiv1/iampb#SetIamPolicyRequest.
+		Resource: "",
+		Policy: &iampb.Policy{
+			Version: "",
+			Bindings: &iampb.Binding{
+				Role: "",
+				Members: "",
+				Condition: &exprpb.Expr{...}
+			}
+			AuditConfigs: &iampb.AuditConfig{
+				Service: "",
+				AuditLogConfigs: &iampb.AuditLogConfig{...}
+			}
+			Etag: "",
+		}
+		UpdateMask: &iampb.FieldMask{
+			Paths: "",
+		}
 	}
 	resp, err := c.SetIamPolicy(ctx, req)
 	if err != nil {

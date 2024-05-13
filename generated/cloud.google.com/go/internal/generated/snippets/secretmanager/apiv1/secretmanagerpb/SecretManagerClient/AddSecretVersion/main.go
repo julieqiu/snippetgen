@@ -37,9 +37,14 @@ func main() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#AddSecretVersionRequest.
 	req := &secretmanagerpb.AddSecretVersionRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#AddSecretVersionRequest.
+		Parent: "",
+		Payload: &secretmanagerpb.SecretPayload{
+			Data: "",
+			DataCrc32C: "",
+		}
 	}
 	resp, err := c.AddSecretVersion(ctx, req)
 	if err != nil {

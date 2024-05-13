@@ -37,9 +37,42 @@ func main() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#UpdateSecretRequest.
 	req := &secretmanagerpb.UpdateSecretRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#UpdateSecretRequest.
+		Secret: &secretmanagerpb.Secret{
+			Name: "",
+			Replication: &secretmanagerpb.Replication{
+				Automatic: "",
+				UserManaged: "",
+			}
+			CreateTime: &timestamppb.Timestamp{
+				Seconds: "",
+				Nanos: "",
+			}
+			Labels: "",
+			Topics: &secretmanagerpb.Topic{
+				Name: "",
+			}
+			ExpireTime: &timestamppb.Timestamp{
+				Seconds: "",
+				Nanos: "",
+			}
+			Ttl: &durationpb.Duration{
+				Seconds: "",
+				Nanos: "",
+			}
+			Etag: "",
+			Rotation: &secretmanagerpb.Rotation{
+				NextRotationTime: &timestamppb.Timestamp{...}
+				RotationPeriod: &durationpb.Duration{...}
+			}
+			VersionAliases: "",
+			Annotations: "",
+		}
+		UpdateMask: &secretmanagerpb.FieldMask{
+			Paths: "",
+		}
 	}
 	resp, err := c.UpdateSecret(ctx, req)
 	if err != nil {

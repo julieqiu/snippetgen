@@ -37,9 +37,11 @@ func main() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#EnableSecretVersionRequest.
 	req := &secretmanagerpb.EnableSecretVersionRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#EnableSecretVersionRequest.
+		Name: "",
+		Etag: "",
 	}
 	resp, err := c.EnableSecretVersion(ctx, req)
 	if err != nil {

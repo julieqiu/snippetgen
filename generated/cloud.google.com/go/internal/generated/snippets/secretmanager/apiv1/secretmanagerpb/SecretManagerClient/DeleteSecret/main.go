@@ -37,9 +37,11 @@ func main() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DeleteSecretRequest.
 	req := &secretmanagerpb.DeleteSecretRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DeleteSecretRequest.
+		Name: "",
+		Etag: "",
 	}
 	err = c.DeleteSecret(ctx, req)
 	if err != nil {

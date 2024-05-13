@@ -38,9 +38,13 @@ func main() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#ListSecretsRequest.
 	req := &secretmanagerpb.ListSecretsRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#ListSecretsRequest.
+		Parent: "",
+		PageSize: "",
+		PageToken: "",
+		Filter: "",
 	}
 	it := c.ListSecrets(ctx, req)
 	for {

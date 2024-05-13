@@ -104,9 +104,9 @@ func (g *generator) genAndCommitSnippets(s *descriptorpb.ServiceDescriptorProto)
 			content += *f.Content
 		}
 		if strings.Contains(fp, "SecretManagerClient/CreateSecret/main.go") {
-			fmt.Println(fp)
-			fmt.Println(content)
-			fmt.Println(strings.Repeat("-", 80))
+			// fmt.Println(fp)
+			// fmt.Println(content)
+			// fmt.Println(strings.Repeat("-", 80))
 		}
 	}
 	return nil

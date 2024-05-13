@@ -38,9 +38,11 @@ func main() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/iam/apiv1/iampb#TestIamPermissionsRequest.
 	req := &iampb.TestIamPermissionsRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/iam/apiv1/iampb#TestIamPermissionsRequest.
+		Resource: "",
+		Permissions: "",
 	}
 	resp, err := c.TestIamPermissions(ctx, req)
 	if err != nil {

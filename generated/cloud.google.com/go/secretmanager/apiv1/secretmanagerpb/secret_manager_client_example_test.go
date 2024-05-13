@@ -55,9 +55,10 @@ func ExampleSecretManagerClient_AccessSecretVersion() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#AccessSecretVersionRequest.
 	req := &secretmanagerpb.AccessSecretVersionRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#AccessSecretVersionRequest.
+		Name: "",
 	}
 	resp, err := c.AccessSecretVersion(ctx, req)
 	if err != nil {
@@ -80,9 +81,14 @@ func ExampleSecretManagerClient_AddSecretVersion() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#AddSecretVersionRequest.
 	req := &secretmanagerpb.AddSecretVersionRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#AddSecretVersionRequest.
+		Parent: "",
+		Payload: &secretmanagerpb.SecretPayload{
+			Data: "",
+			DataCrc32C: "",
+		}
 	}
 	resp, err := c.AddSecretVersion(ctx, req)
 	if err != nil {
@@ -105,9 +111,41 @@ func ExampleSecretManagerClient_CreateSecret() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#CreateSecretRequest.
 	req := &secretmanagerpb.CreateSecretRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#CreateSecretRequest.
+		Parent: "",
+		SecretId: "",
+		Secret: &secretmanagerpb.Secret{
+			Name: "",
+			Replication: &secretmanagerpb.Replication{
+				Automatic: "",
+				UserManaged: "",
+			}
+			CreateTime: &timestamppb.Timestamp{
+				Seconds: "",
+				Nanos: "",
+			}
+			Labels: "",
+			Topics: &secretmanagerpb.Topic{
+				Name: "",
+			}
+			ExpireTime: &timestamppb.Timestamp{
+				Seconds: "",
+				Nanos: "",
+			}
+			Ttl: &durationpb.Duration{
+				Seconds: "",
+				Nanos: "",
+			}
+			Etag: "",
+			Rotation: &secretmanagerpb.Rotation{
+				NextRotationTime: &timestamppb.Timestamp{...}
+				RotationPeriod: &durationpb.Duration{...}
+			}
+			VersionAliases: "",
+			Annotations: "",
+		}
 	}
 	resp, err := c.CreateSecret(ctx, req)
 	if err != nil {
@@ -130,9 +168,11 @@ func ExampleSecretManagerClient_DeleteSecret() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DeleteSecretRequest.
 	req := &secretmanagerpb.DeleteSecretRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DeleteSecretRequest.
+		Name: "",
+		Etag: "",
 	}
 	err = c.DeleteSecret(ctx, req)
 	if err != nil {
@@ -153,9 +193,11 @@ func ExampleSecretManagerClient_DestroySecretVersion() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DestroySecretVersionRequest.
 	req := &secretmanagerpb.DestroySecretVersionRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DestroySecretVersionRequest.
+		Name: "",
+		Etag: "",
 	}
 	resp, err := c.DestroySecretVersion(ctx, req)
 	if err != nil {
@@ -178,9 +220,11 @@ func ExampleSecretManagerClient_DisableSecretVersion() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DisableSecretVersionRequest.
 	req := &secretmanagerpb.DisableSecretVersionRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#DisableSecretVersionRequest.
+		Name: "",
+		Etag: "",
 	}
 	resp, err := c.DisableSecretVersion(ctx, req)
 	if err != nil {
@@ -203,9 +247,11 @@ func ExampleSecretManagerClient_EnableSecretVersion() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#EnableSecretVersionRequest.
 	req := &secretmanagerpb.EnableSecretVersionRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#EnableSecretVersionRequest.
+		Name: "",
+		Etag: "",
 	}
 	resp, err := c.EnableSecretVersion(ctx, req)
 	if err != nil {
@@ -228,9 +274,13 @@ func ExampleSecretManagerClient_GetIamPolicy() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/iam/apiv1/iampb#GetIamPolicyRequest.
 	req := &iampb.GetIamPolicyRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/iam/apiv1/iampb#GetIamPolicyRequest.
+		Resource: "",
+		Options: &iampb.GetPolicyOptions{
+			RequestedPolicyVersion: "",
+		}
 	}
 	resp, err := c.GetIamPolicy(ctx, req)
 	if err != nil {
@@ -253,9 +303,10 @@ func ExampleSecretManagerClient_GetSecret() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#GetSecretRequest.
 	req := &secretmanagerpb.GetSecretRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#GetSecretRequest.
+		Name: "",
 	}
 	resp, err := c.GetSecret(ctx, req)
 	if err != nil {
@@ -278,9 +329,10 @@ func ExampleSecretManagerClient_GetSecretVersion() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#GetSecretVersionRequest.
 	req := &secretmanagerpb.GetSecretVersionRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#GetSecretVersionRequest.
+		Name: "",
 	}
 	resp, err := c.GetSecretVersion(ctx, req)
 	if err != nil {
@@ -303,9 +355,13 @@ func ExampleSecretManagerClient_ListSecretVersions() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#ListSecretVersionsRequest.
 	req := &secretmanagerpb.ListSecretVersionsRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#ListSecretVersionsRequest.
+		Parent: "",
+		PageSize: "",
+		PageToken: "",
+		Filter: "",
 	}
 	it := c.ListSecretVersions(ctx, req)
 	for {
@@ -340,9 +396,13 @@ func ExampleSecretManagerClient_ListSecrets() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#ListSecretsRequest.
 	req := &secretmanagerpb.ListSecretsRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#ListSecretsRequest.
+		Parent: "",
+		PageSize: "",
+		PageToken: "",
+		Filter: "",
 	}
 	it := c.ListSecrets(ctx, req)
 	for {
@@ -377,9 +437,26 @@ func ExampleSecretManagerClient_SetIamPolicy() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/iam/apiv1/iampb#SetIamPolicyRequest.
 	req := &iampb.SetIamPolicyRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/iam/apiv1/iampb#SetIamPolicyRequest.
+		Resource: "",
+		Policy: &iampb.Policy{
+			Version: "",
+			Bindings: &iampb.Binding{
+				Role: "",
+				Members: "",
+				Condition: &exprpb.Expr{...}
+			}
+			AuditConfigs: &iampb.AuditConfig{
+				Service: "",
+				AuditLogConfigs: &iampb.AuditLogConfig{...}
+			}
+			Etag: "",
+		}
+		UpdateMask: &iampb.FieldMask{
+			Paths: "",
+		}
 	}
 	resp, err := c.SetIamPolicy(ctx, req)
 	if err != nil {
@@ -402,9 +479,11 @@ func ExampleSecretManagerClient_TestIamPermissions() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/iam/apiv1/iampb#TestIamPermissionsRequest.
 	req := &iampb.TestIamPermissionsRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/iam/apiv1/iampb#TestIamPermissionsRequest.
+		Resource: "",
+		Permissions: "",
 	}
 	resp, err := c.TestIamPermissions(ctx, req)
 	if err != nil {
@@ -427,9 +506,42 @@ func ExampleSecretManagerClient_UpdateSecret() {
 	}
 	defer c.Close()
 
+	// TODO: Fill request struct fields.
+	// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#UpdateSecretRequest.
 	req := &secretmanagerpb.UpdateSecretRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/cloud.google.com/go/secretmanager/apiv1/secretmanagerpb#UpdateSecretRequest.
+		Secret: &secretmanagerpb.Secret{
+			Name: "",
+			Replication: &secretmanagerpb.Replication{
+				Automatic: "",
+				UserManaged: "",
+			}
+			CreateTime: &timestamppb.Timestamp{
+				Seconds: "",
+				Nanos: "",
+			}
+			Labels: "",
+			Topics: &secretmanagerpb.Topic{
+				Name: "",
+			}
+			ExpireTime: &timestamppb.Timestamp{
+				Seconds: "",
+				Nanos: "",
+			}
+			Ttl: &durationpb.Duration{
+				Seconds: "",
+				Nanos: "",
+			}
+			Etag: "",
+			Rotation: &secretmanagerpb.Rotation{
+				NextRotationTime: &timestamppb.Timestamp{...}
+				RotationPeriod: &durationpb.Duration{...}
+			}
+			VersionAliases: "",
+			Annotations: "",
+		}
+		UpdateMask: &secretmanagerpb.FieldMask{
+			Paths: "",
+		}
 	}
 	resp, err := c.UpdateSecret(ctx, req)
 	if err != nil {

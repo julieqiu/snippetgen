@@ -97,6 +97,11 @@ func (g *generator) exampleMethod(pkgName, servName string, m *descriptorpb.Meth
 	return nil
 }
 
+type message struct {
+	name   string
+	values map[string]interface{}
+}
+
 func (g *generator) exampleMethodBody(pkgName, servName string, m *descriptorpb.MethodDescriptorProto) error {
 	if m.GetClientStreaming() != m.GetServerStreaming() {
 		// TODO(pongad): implement this correctly.
@@ -135,57 +140,60 @@ func (g *generator) exampleMethodBody(pkgName, servName string, m *descriptorpb.
 	}
 	g.exampleInitClient(pkgName, s)
 
-	req := map[string]interface{}{}
 	in2 := inType.(*descriptorpb.DescriptorProto)
-	for _, f := range in2.Field {
-		if *in2.Name != "CreateSecretRequest" {
-			continue
-		}
-		if f.Name == nil {
-			// parts := strings.Split(inSpec, ".")
-			// name := parts[len(parts)-1]
-			// p(`  %s: ""`, inSpec)
-			continue
-		}
-		if f.TypeName == nil {
-			req[strcase.ToCamel(*f.Name)] = "TODO"
-			continue
-		}
-
-		// The field is a message.
-		msg := g.msgInfo[*f.TypeName]
-		if msg == nil {
-			req[strcase.ToCamel(*f.Name)] = "TODO 2"
-			continue
-		}
-		for _, f2 := range msg.Field {
-			// parts := strings.Split(*f2.Name, ".")
-			// name := parts[len(parts)-1]
-			// fmt.Println(name)
-
-			// This is recursive.
-			if f2.TypeName == nil {
-				typ := fmt.Sprintf("&%s.%s{}", inSpec.Name, *f.TypeName)
-				req[strcase.ToCamel(*f.Name)] = typ
-			}
-
-			// The field is a message.
-			/*
-				fmt.Println(name)
-				if f2.TypeName != nil {
-					fmt.Println(*f2.TypeName)
-				}
-			*/
-		}
-	}
 
 	if !m.GetClientStreaming() && !m.GetServerStreaming() {
 		p("")
-		p("req := &%s.%s{", inSpec.Name, inType.GetName())
 		p("  // TODO: Fill request struct fields.")
 		p("  // See https://pkg.go.dev/%s#%s.", inSpec.Path, inType.GetName())
-		for k, v := range req {
-			p("%s: %q,", k, v)
+		p("req := &%s.%s{", inSpec.Name, inType.GetName())
+		for _, f := range in2.Field {
+			g.printStructFields(f)
+			if f.TypeName == nil {
+				continue
+			}
+
+			// The field is a message.
+			msg := g.getMessage(f)
+			if msg == nil {
+				continue
+			}
+			p("%s: &%s.%s{\n", strcase.ToCamel(*f.Name), inSpec.Name, *msg.Name)
+			for _, f2 := range msg.Field {
+				g.printStructFields(f2)
+				if f2.TypeName == nil {
+					continue
+				}
+				msg2 := g.getMessage(f2)
+				if msg2 == nil {
+					continue
+				}
+				inSpec2, err := g.descInfo.ImportSpec(msg2)
+				if err != nil {
+					return err
+				}
+
+				p("%s: &%s.%s{\n", strcase.ToCamel(*f2.Name), inSpec2.Name, *msg2.Name)
+				for _, f3 := range msg2.Field {
+					g.printStructFields(f3)
+					if f3.TypeName == nil {
+						continue
+					}
+
+					// The field is a message.
+					msg4 := g.getMessage(f3)
+					if msg4 == nil {
+						continue
+					}
+					inSpec3, err := g.descInfo.ImportSpec(msg4)
+					if err != nil {
+						return err
+					}
+					p("%s: &%s.%s{...}", strcase.ToCamel(*f3.Name), inSpec3.Name, *msg4.Name)
+				}
+				p("}")
+			}
+			p("}")
 		}
 		p("}")
 	}
@@ -209,6 +217,28 @@ func (g *generator) exampleMethodBody(pkgName, servName string, m *descriptorpb.
 	}
 
 	return nil
+}
+
+func (g *generator) getMessage(f *descriptorpb.FieldDescriptorProto) *descriptorpb.DescriptorProto {
+	parts := strings.Split(*f.TypeName, ".")
+	name := parts[len(parts)-1]
+	msg := g.msgInfo[name]
+	return msg
+}
+
+func (g *generator) printStructFields(f *descriptorpb.FieldDescriptorProto) {
+	p := g.printf
+
+	if f.TypeName == nil {
+		p("%s: %q,\n", strcase.ToCamel(*f.Name), "")
+		return
+	}
+
+	msg := g.getMessage(f)
+	if msg == nil {
+		p("%s: %q,\n", strcase.ToCamel(*f.Name), "")
+		return
+	}
 }
 
 func (g *generator) exampleLROCall(m *descriptorpb.MethodDescriptorProto) {

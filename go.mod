@@ -1,6 +1,6 @@
 module github.com/julieqiu/snippetgen
 
-go 1.21.1
+go 1.19
 
 require (
 	cloud.google.com/go/iam v1.1.8
@@ -9,6 +9,7 @@ require (
 	github.com/ghodss/yaml v1.0.0
 	github.com/google/go-cmp v0.6.0
 	github.com/googleapis/gax-go/v2 v2.12.3
+	github.com/iancoleman/strcase v0.3.0
 	gitlab.com/golang-commonmark/markdown v0.0.0-20211110145824-bf3e522c626a
 	google.golang.org/api v0.177.0
 	google.golang.org/genproto v0.0.0-20240401170217-c3f982113cda
@@ -28,7 +29,6 @@ require (
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/s2a-go v0.1.7 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
-	github.com/iancoleman/strcase v0.3.0 // indirect
 	gitlab.com/golang-commonmark/html v0.0.0-20191124015941-a22733972181 // indirect
 	gitlab.com/golang-commonmark/linkify v0.0.0-20191026162114-a0c2df6c8f82 // indirect
 	gitlab.com/golang-commonmark/mdurl v0.0.0-20191124015652-932350d1cb84 // indirect
